@@ -15,6 +15,13 @@ namespace game_2d {
             window.setFramerateLimit(60);
          }
         void run();
+
+        // Systems
+        void sMovement() {}
+        void sUserInput() {}
+        void sRender() {}
+        void sEnemySpawner() {}
+        void sCollision() {}
     };
 }
 

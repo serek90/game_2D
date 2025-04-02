@@ -14,7 +14,7 @@ namespace game_2d {
         size_t m_totalEntities = 0;
 
     public:
-        EntityManager() {}
+        EntityManager();
         std::shared_ptr<Entity> addEntity(const std::string& tag);
         void update();
         EntityVec& getEntities();

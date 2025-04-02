@@ -3,7 +3,9 @@
 #include <iostream>
 #include <memory>
 //#include "CTransform.h"
-//#include "CShape.h"
+#include "CShape.h"
+#include <SFML/Graphics.hpp>
+#include <SFML/Window.hpp>
 
 namespace game_2d {
     class Entity {
@@ -12,11 +14,15 @@ namespace game_2d {
         bool m_alive = true;
     public:
         //std::shared_ptr<CTransform> cTransform;
-        //std::shared_ptr<CShape> cShape;
+        std::shared_ptr<CShape> cShape;
         //std::shared_ptr<CBBox> cBBox;
         //std::shared_ptr<CName> cName;
 
         Entity(const std::string& tag, size_t id);
+        Entity(const std::string& tag, size_t id, float xS, float yS, shape_type shape_t, Color color) {
+            cShape = std::make_shared<CShape>(xS, yS, shape_t, color);
+        }
+        sf::Shape& getSfShape() { return cShape->getSfShape(); }
    };
 }
 
