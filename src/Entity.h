@@ -18,7 +18,7 @@ namespace game_2d {
         //std::shared_ptr<CBBox> cBBox;
         //std::shared_ptr<CName> cName;
 
-        Entity(const std::string& tag, size_t id);
+        Entity(const std::string& tag, size_t id) {}
         Entity(const std::string& tag, size_t id, float xS, float yS, shape_type shape_t, Color color) {
             cShape = std::make_shared<CShape>(xS, yS, shape_t, color);
         }
