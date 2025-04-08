@@ -5,9 +5,10 @@
 #include "Entity.h"
 
 namespace game_2d {
+    using EntityVec = std::vector<std::shared_ptr<Entity>> ;
+    using EntityMap = std::map   <std::string, EntityVec>  ;
+
     class EntityManager {
-        using EntityVec = std::vector<std::shared_ptr<Entity>> ;
-        using EntityMap = std::map   <std::string, EntityVec>  ;
         EntityVec m_entities;
         EntityVec m_toAdd;
         EntityMap m_entityMap;
