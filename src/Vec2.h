@@ -1,53 +1,37 @@
 #ifndef __VEC2_H
 #define __VEC2_H
 
-class Vec2
-{
-
-public:
-    float x;
-    float y;
-
-    Vec2() {}
-    Vec2(float xin, float yin) : x{xin}, y{yin} {}
+#include <cmath>
 
 
-    Vec2 operator + (const Vec2 &rhs) const
+namespace game_2d {
+    class Vec2
     {
-        Vec2 vec(rhs.x + x, rhs.y + y);
-        return vec;
-    }
+        float x;
+        float y;
+    public:
+        Vec2(float xin, float yin) : x{xin}, y{yin} {}
 
-    void operator += (const Vec2 &rhs)
-    {
-        x += rhs.x;
-        y += rhs.y;
-    }
+        Vec2 operator + (const Vec2 &rhs) const;
+        Vec2 operator - (const Vec2 &rhs) const;
+        Vec2 operator * (const float val) const;
+        Vec2 operator / (const float val) const;
 
-    Vec2& add(const Vec2& v)
-    {
-        x += v.x;
-        y += v.y;
-        return *this;
-    }
+        void operator += (const Vec2 &rhs);
+        void operator -= (const Vec2 &rhs);
+        void operator *= (const float val);
+        void operator /= (const float val);
 
-    Vec2 &scale(float s)
-    {
-        x *= s;
-        y *= s;
-        return *this;
-    }
+        bool operator == (const Vec2 &rhs) const;
+        bool operator != (const Vec2 &rhs) const;
 
-    Vec2& rotate(float deg)
-    {
-        return *this;
-    }
+        Vec2& add(const Vec2& v);
+        Vec2 &scale(float s);
+        Vec2& rotate(float deg);
 
-    float dist(const Vec2& v) const
-    {
-        return sqrtf((v.x -x ) * (v.x - x) + (v.y - y) * (v.y - y));
-    }
-};
+        float dist(const Vec2& v) const;
+    };
+}
 
 
 #endif /* __VEC2_H */
