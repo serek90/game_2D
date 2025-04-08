@@ -1,9 +1,11 @@
 CC = g++
-CPPFLAGS = -lsfml-graphics -lsfml-window -lsfml-system
+CPPFLAGS = -lsfml-graphics -lsfml-window -lsfml-system -L Components -lComponents
 
-objects = Entity.o EntityManager.o CShape.o Game.o main.o Vec2.o
+objects = Entity.o EntityManager.o Game.o main.o Vec2.o
+
 
 all: $(objects)
+	$(MAKE) -C Components
 	$(CC) $^ $(CPPFLAGS) -o game_2D
 
 $(objects): %.o: %.cc

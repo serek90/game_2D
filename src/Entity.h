@@ -3,7 +3,7 @@
 #include <iostream>
 #include <memory>
 //#include "CTransform.h"
-#include "CShape.h"
+#include "Components/CShape.h"
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 
