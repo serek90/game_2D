@@ -5,6 +5,7 @@
 #include "Components/CTransform.h"
 #include "Components/CShape.h"
 #include "Components/CCollision.h"
+#include "Components/CScore.h"
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 
@@ -17,6 +18,7 @@ namespace game_2d {
         std::shared_ptr<CTransform> cTransform;
         std::shared_ptr<CShape> cShape;
         std::shared_ptr<CCollision> cCollision;
+        std::shared_ptr<CScore> cScore;
         //std::shared_ptr<CBBox> cBBox;
         //std::shared_ptr<CName> cName;
 
