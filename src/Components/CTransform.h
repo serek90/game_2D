@@ -6,15 +6,18 @@
 #include <memory>
 #include "Vec2.h"
 
-class CTransform
-{
-public:
-  Vec2 pos = { 0, 0 };
-  Vec2 velocity = { 0, 0 };
+namespace game_2d {
+  class CTransform
+  {
+  public:
+    Vec2 pos = { 0, 0 };
+    Vec2 velocity = { 0, 0 };
+    float angle;
 
-  CTransform() {}
-  CTransform(const Vec2 &p, const Vec2 &v) : pos{p}, velocity{v} {}
+    CTransform(const Vec2 &p, const Vec2 &v, float ang)
+      : pos{p}, velocity{v}, angle{ang} {}
 
-};
+    };
+}
 
 #endif /* __TRANSFORM_H */

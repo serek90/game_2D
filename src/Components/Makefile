@@ -5,7 +5,7 @@ CPPFLAGS = -Wall -g -lsfml-graphics -lsfml-window -lsfml-system
 LIBRARY = libComponents.a
 
 # Source files
-SRC = CShape.cc
+SRC = CShape.cc Vec2.cc
 
 # Object files (replace .c with .o)
 OBJ = $(SRC:.cc=.o)

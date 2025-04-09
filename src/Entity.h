@@ -2,7 +2,7 @@
 #define __ENTITY_H
 #include <iostream>
 #include <memory>
-//#include "CTransform.h"
+#include "Components/CTransform.h"
 #include "Components/CShape.h"
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
@@ -13,7 +13,7 @@ namespace game_2d {
         const std::string m_tag = "Default";
         bool m_alive = true;
     public:
-        //std::shared_ptr<CTransform> cTransform;
+        std::shared_ptr<CTransform> cTransform;
         std::shared_ptr<CShape> cShape;
         //std::shared_ptr<CBBox> cBBox;
         //std::shared_ptr<CName> cName;
