@@ -4,7 +4,6 @@
 namespace game_2d {
 
     void Game::run() {
-        EntityManager entityManager;
 
         for(int i = 0; i < 10; i++)
         {
@@ -24,13 +23,21 @@ namespace game_2d {
                     window.close();
             }
     
-            window.clear(sf::Color::Black);
-            auto ent = entityManager.getEntities("entity2");
-            for(auto &e : ent) {
-                window.draw(e->getSfShape());
-            }
-
-            window.display();
+            sRender();
         }
+    }
+
+    void Game::sRender() {
+
+        window.clear(sf::Color::Black);
+
+        auto ent = entityManager.getEntities("entity2");
+        for(auto &e : ent) {
+            window.draw(e->getSfShape());
+        }
+
+        entityManager.update();
+
+        window.display();
     }
 }

@@ -28,19 +28,10 @@ namespace game_2d {
         checkBorder(w,h);
     }
 
-    CShape::CShape(float xS, float yS, shape_type shape_t, Color color) : xSize{xS * 2}, ySize{yS * 2} 
+    CShape::CShape(float xS, float yS, Color color) : xSize{xS * 2}, ySize{yS * 2} 
     {
-        int shape_s = 1;
-        switch(shape_t) {
-            case shape_type::Circle:
-                sfShape = std::make_shared<sf::CircleShape>(xS);
-                break;
-            case shape_type::Rectangle:
-                sfShape = std::make_shared<sf::RectangleShape>(sf::Vector2f(xS, yS));
-                break;
-            default:
-                sfShape = std::make_shared<sf::CircleShape>(xS, 4);
-        }
+
+        sfShape = std::make_shared<sf::CircleShape>(xS);
 
         sfShape->setPosition(100.0f,100.0f);
         setColor(color);

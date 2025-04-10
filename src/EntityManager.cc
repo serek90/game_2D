@@ -2,7 +2,7 @@
 
 namespace game_2d {
     std::shared_ptr<Entity> EntityManager::addEntity(const std::string &tag) {
-        auto e = std::make_shared<Entity>(tag, m_totalEntities++, 10 * m_totalEntities, m_totalEntities, shape_type::Circle, Color::Green);
+        auto e = std::make_shared<Entity>(tag, m_totalEntities++, 10 * m_totalEntities, m_totalEntities, Color::Green);
         m_entities.push_back(e);
         m_entityMap[tag].push_back(e);
         return e;
@@ -14,6 +14,12 @@ namespace game_2d {
 
     EntityVec& EntityManager::getEntities(const std::string &tag) {
         return m_entityMap[tag];
+    }
+
+    void EntityManager::update() {
+        for(auto &e : m_entities) {
+            e->update();
+        }
     }
 
     EntityManager::EntityManager() {

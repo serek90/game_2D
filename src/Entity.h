@@ -6,6 +6,8 @@
 #include "Components/CShape.h"
 #include "Components/CCollision.h"
 #include "Components/CScore.h"
+#include "Components/CInput.h"
+#include "Components/CLifeSpan.h"
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 
@@ -19,13 +21,13 @@ namespace game_2d {
         std::shared_ptr<CShape> cShape;
         std::shared_ptr<CCollision> cCollision;
         std::shared_ptr<CScore> cScore;
-        //std::shared_ptr<CBBox> cBBox;
-        //std::shared_ptr<CName> cName;
-
+        std::shared_ptr<CInput> cInput;
+        std::shared_ptr<CLifeSpan> cLifeSpan;
         Entity(const std::string& tag, size_t id) {}
-        Entity(const std::string& tag, size_t id, float xS, float yS, shape_type shape_t, Color color) {
-            cShape = std::make_shared<CShape>(xS, yS, shape_t, color);
+        Entity(const std::string& tag, size_t id, float xS, float yS, Color color) {
+            cShape = std::make_shared<CShape>(xS, yS, color);
         }
+        void update() {cShape->updatePos(1000, 1000);}
         sf::Shape& getSfShape() { return cShape->getSfShape(); }
    };
 }

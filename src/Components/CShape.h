@@ -30,7 +30,7 @@ namespace game_2d {
 
     public:
 
-        CShape(float xS, float yS, shape_type shape_t, Color color);
+        CShape(float xS, float yS, Color color);
 
         void checkBorder(float w, float h);
 

@@ -10,6 +10,7 @@ namespace game_2d {
         const int windowHeight = 480;
         sf::RenderWindow window;
         EntityManager entityManager;
+        void sRender();
     public:
         Game() : window(sf::VideoMode(windowHeight,windowWidth), "SFML_works") {
             window.setFramerateLimit(60);
@@ -19,7 +20,6 @@ namespace game_2d {
         // Systems
         void sMovement() {}
         void sUserInput() {}
-        void sRender() {}
         void sEnemySpawner() {}
         void sCollision() {}
     };
