@@ -1,4 +1,5 @@
 #include "CShape.h"
+#include <iostream>
 
 
 namespace game_2d {
@@ -18,17 +19,17 @@ namespace game_2d {
     {
         if(w <= sfShape->getPosition().x + xSize || 0 >= sfShape->getPosition().x)
             speed.x *= -1.0f;
-        if(h <= sfShape->getPosition().y + ySize || 0 >= sfShape->getPosition().y)
+        if(h <= sfShape->getPosition().y + xSize || 0 >= sfShape->getPosition().y)
             speed.y *= -1.0f;
     }
 
     void CShape::updatePos(float w, float h)
     {
-        sfShape->setPosition(sfShape->getPosition().x + speed.x, sfShape->getPosition().y + speed.y);
+        sfShape->setPosition(w,h);
         checkBorder(w,h);
     }
 
-    CShape::CShape(float xS, float yS, Color color) : xSize{xS * 2}, ySize{yS * 2} 
+    CShape::CShape(float xS,  Color color) : xSize{xS * 2}
     {
 
         sfShape = std::make_shared<sf::CircleShape>(xS);

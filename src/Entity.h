@@ -10,6 +10,7 @@
 #include "Components/CLifeSpan.h"
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
+#include "Components/Vec2.h"
 
 namespace game_2d {
     class Entity {
@@ -24,11 +25,22 @@ namespace game_2d {
         std::shared_ptr<CInput> cInput;
         std::shared_ptr<CLifeSpan> cLifeSpan;
         Entity(const std::string& tag, size_t id) {}
-        Entity(const std::string& tag, size_t id, float xS, float yS, Color color) {
-            cShape = std::make_shared<CShape>(xS, yS, color);
+        Entity(const std::string& tag, size_t id, float xS,  Color color) {
+            cShape = std::make_shared<CShape>(xS, color);
+
+            static int i = 0;
+            Vec2 pos(20.0f * i,20.0f * i);
+            i++;
+            Vec2 vel(1,1);
+            cTransform = std::make_shared<CTransform>(pos, vel, 3.4);
         }
-        void update() {cShape->updatePos(1000, 1000);}
-        sf::Shape& getSfShape() { return cShape->getSfShape(); }
+        void update() {
+            cTransform->pos += cTransform->velocity;
+            cShape->updatePos(cTransform->pos.x, cTransform->pos.y);
+        }
+        sf::Shape& getSfShape() { 
+            return cShape->getSfShape(); 
+        }
    };
 }
 

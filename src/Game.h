@@ -11,8 +11,9 @@ namespace game_2d {
         sf::RenderWindow window;
         EntityManager entityManager;
         void sRender();
+        void sCollision();
     public:
-        Game() : window(sf::VideoMode(windowHeight,windowWidth), "SFML_works") {
+        Game() : window(sf::VideoMode(windowWidth, windowHeight), "SFML_works") {
             window.setFramerateLimit(60);
          }
         void run();
@@ -21,7 +22,6 @@ namespace game_2d {
         void sMovement() {}
         void sUserInput() {}
         void sEnemySpawner() {}
-        void sCollision() {}
     };
 }
 

@@ -21,7 +21,6 @@ namespace game_2d {
         std::shared_ptr<sf::Shape> sfShape;
         shapesSpeed speed;
         float xSize;
-        float ySize;
 
         void setXSpeed(float Xspeed) { speed.x = Xspeed; }
         void setYSpeed(float Yspeed) { speed.y = Yspeed; }
@@ -30,7 +29,7 @@ namespace game_2d {
 
     public:
 
-        CShape(float xS, float yS, Color color);
+        CShape(float xS, Color color);
 
         void checkBorder(float w, float h);
 

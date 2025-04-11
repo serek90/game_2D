@@ -7,9 +7,10 @@
 namespace game_2d {
     class Vec2
     {
+
+    public:
         float x;
         float y;
-    public:
         Vec2(float xin, float yin) : x{xin}, y{yin} {}
 
         Vec2 operator + (const Vec2 &rhs) const;
