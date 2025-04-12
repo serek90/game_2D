@@ -25,22 +25,8 @@ namespace game_2d {
         std::shared_ptr<CInput> cInput;
         std::shared_ptr<CLifeSpan> cLifeSpan;
         Entity(const std::string& tag, size_t id) {}
-        Entity(const std::string& tag, size_t id, float xS,  Color color) {
-            cShape = std::make_shared<CShape>(xS, color);
-
-            static int i = 0;
-            std::srand(std::time({})); // use current time as seed for random generator
-            int rW = std::rand() % 640;
-            int rH = std::rand() %480;
-            Vec2 pos(rW,rH);
-            i++;
-            Vec2 vel(xS,xS);
-            cTransform = std::make_shared<CTransform>(pos, vel, 3.4);
-        }
-        void update() {
-            cTransform->pos += cTransform->velocity;
-            cShape->updatePos(cTransform->pos.x, cTransform->pos.y);
-        }
+        Entity(const std::string& tag, size_t id, float xS,  Color color);
+        void update();
         sf::Shape& getSfShape() { 
             return cShape->getSfShape(); 
         }

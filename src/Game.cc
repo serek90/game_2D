@@ -4,7 +4,9 @@
 namespace game_2d {
 
     void Game::run() {
-
+        player = std::make_unique<Entity>("player", 0, 10,  Color::Red);
+        player->cInput = std::make_unique<CInput>();
+        /*
         for(int i = 0; i < 10; i++)
         {
             entityManager.addEntity("entity1", 2 * i, Color::Green);
@@ -15,7 +17,7 @@ namespace game_2d {
                entityManager.addEntity("entity2", 2 * i, Color::Green);
             else
                entityManager.addEntity("entity2", 2 * i, Color::Red);
-        }
+        } */
 
         /* ToDo: Implement PAUSE system */
         while (window.isOpen())
@@ -38,6 +40,7 @@ namespace game_2d {
         for(auto &e : ent) {
             window.draw(e->getSfShape());
         }
+        window.draw(player->getSfShape());
 
         window.display();
     }
@@ -69,7 +72,20 @@ namespace game_2d {
 
                 switch(event.key.code) {
                     case sf::Keyboard::Up:
-                    std::cout<< "Key W pressed" << std::endl;
+                    std::cout<< "Key Up pressed" << std::endl;
+                    player->cInput->up = true;
+                    break;
+                    case sf::Keyboard::Down:
+                    std::cout<< "Key Down pressed" << std::endl;
+                    player->cInput->down = true;
+                    break;
+                    case sf::Keyboard::Left:
+                    std::cout<< "Key Left pressed" << std::endl;
+                    player->cInput->left = true;
+                    break;
+                    case sf::Keyboard::Right:
+                    std::cout<< "Key Right pressed" << std::endl;
+                    player->cInput->right = true;
                     break;
                 }
 
@@ -77,10 +93,44 @@ namespace game_2d {
 
                 switch(event.key.code) {
                     case sf::Keyboard::Up:
-                    std::cout<< "Key W released" << std::endl;
-                    break;                    
+                    std::cout<< "Key Up released" << std::endl;
+                    player->cInput->up = false;
+                    break;
+                    case sf::Keyboard::Down:
+                    std::cout<< "Key Down released" << std::endl;
+                    player->cInput->down = false;
+                    break;
+                    case sf::Keyboard::Left:
+                    std::cout<< "Key Left released" << std::endl;
+                    player->cInput->left = false;
+                    break;
+                    case sf::Keyboard::Right:
+                    std::cout<< "Key Right released" << std::endl;
+                    player->cInput->right = false;
+                    break;              
                 }
             }
         }
     }
+
+    void Game::sMovement() {
+        if(player->cInput->up) {
+            player->cTransform->velocity.y = -3;
+        } else if(player->cInput->down) {
+            player->cTransform->velocity.y = 3;
+        } else {
+            player->cTransform->velocity.y = 0;            
+        }
+
+        if(player->cInput->right) {
+            player->cTransform->velocity.x = 3;
+        } else if(player->cInput->left) {
+            player->cTransform->velocity.x = -3;
+        } else {
+            player->cTransform->velocity.x = 0;            
+        }
+
+        player->update();
+    }
+
 }

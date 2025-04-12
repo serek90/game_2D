@@ -9,9 +9,7 @@ namespace game_2d {
         bool right = false;
         bool down  = false;
         bool shoot = false;
-        
     };
-
 }
 
 #endif /* __CINPUT_H */
