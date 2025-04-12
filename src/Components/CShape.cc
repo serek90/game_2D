@@ -15,18 +15,9 @@ namespace game_2d {
         }
     }
 
-    void CShape::checkBorder(float w, float h)
-    {
-        if(w <= sfShape->getPosition().x + xSize || 0 >= sfShape->getPosition().x)
-            speed.x *= -1.0f;
-        if(h <= sfShape->getPosition().y + xSize || 0 >= sfShape->getPosition().y)
-            speed.y *= -1.0f;
-    }
-
     void CShape::updatePos(float w, float h)
     {
         sfShape->setPosition(w,h);
-        checkBorder(w,h);
     }
 
     CShape::CShape(float xS,  Color color) : xSize{xS * 2}

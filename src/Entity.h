@@ -29,9 +29,12 @@ namespace game_2d {
             cShape = std::make_shared<CShape>(xS, color);
 
             static int i = 0;
-            Vec2 pos(20.0f * i,20.0f * i);
+            std::srand(std::time({})); // use current time as seed for random generator
+            int rW = std::rand() % 640;
+            int rH = std::rand() %480;
+            Vec2 pos(rW,rH);
             i++;
-            Vec2 vel(1,1);
+            Vec2 vel(xS,xS);
             cTransform = std::make_shared<CTransform>(pos, vel, 3.4);
         }
         void update() {

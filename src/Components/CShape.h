@@ -22,16 +22,11 @@ namespace game_2d {
         shapesSpeed speed;
         float xSize;
 
-        void setXSpeed(float Xspeed) { speed.x = Xspeed; }
-        void setYSpeed(float Yspeed) { speed.y = Yspeed; }
-
         void setColor(Color color);
 
     public:
 
         CShape(float xS, Color color);
-
-        void checkBorder(float w, float h);
 
         void updatePos(float w, float h);
         sf::Shape& getSfShape() { return *sfShape; }

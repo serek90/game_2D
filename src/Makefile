@@ -13,3 +13,5 @@ $(objects): %.o: %.cc
 
 clean:
 	rm -f *.o
+	rm -f Components/*.o
+	rm -f Components/*.a

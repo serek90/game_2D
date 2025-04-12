@@ -7,23 +7,26 @@ namespace game_2d {
 
         for(int i = 0; i < 10; i++)
         {
-            entityManager.addEntity("entity1");
+            entityManager.addEntity("entity1", 2 * i, Color::Green);
         }
         for(int i = 10; i < 20; i++)
         {
-            entityManager.addEntity("entity2");
+            if(i%2)
+               entityManager.addEntity("entity2", 2 * i, Color::Green);
+            else
+               entityManager.addEntity("entity2", 2 * i, Color::Red);
         }
 
+        /* ToDo: Implement PAUSE system */
         while (window.isOpen())
         {
-            sf::Event event;
-            while (window.pollEvent(event))
-            {
-                if (event.type == sf::Event::Closed)
-                    window.close();
-            }
-            sRender();
+            entityManager.update();
+
+            sEnemySpawner();
+            sMovement();
             sCollision();
+            sUserInput();
+            sRender();
         }
     }
 
@@ -35,8 +38,6 @@ namespace game_2d {
         for(auto &e : ent) {
             window.draw(e->getSfShape());
         }
-
-        entityManager.update();
 
         window.display();
     }
@@ -55,5 +56,31 @@ namespace game_2d {
                 e->cTransform->velocity.y *= -1;
             }
         }    
+    }
+
+    void Game::sUserInput() {
+        sf::Event event;
+        while (window.pollEvent(event))
+        {
+            if (event.type == sf::Event::Closed)
+                window.close();
+
+            if (event.type == sf::Event::KeyPressed) {
+
+                switch(event.key.code) {
+                    case sf::Keyboard::Up:
+                    std::cout<< "Key W pressed" << std::endl;
+                    break;
+                }
+
+            } else if (event.type == sf::Event::KeyReleased) {
+
+                switch(event.key.code) {
+                    case sf::Keyboard::Up:
+                    std::cout<< "Key W released" << std::endl;
+                    break;                    
+                }
+            }
+        }
     }
 }
