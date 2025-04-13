@@ -2,7 +2,7 @@
 
 namespace game_2d {
     std::shared_ptr<Entity> EntityManager::addEntity(const std::string &tag, float xS,  Color color) {
-        auto e = std::make_shared<Entity>(tag, m_totalEntities++, xS,  color);
+        auto e = std::shared_ptr<Entity>(new Entity(tag, m_totalEntities++, xS,  color));
         m_entities.push_back(e);
         m_entityMap[tag].push_back(e);
         return e;

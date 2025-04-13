@@ -17,6 +17,9 @@ namespace game_2d {
         const size_t m_id = 0;
         const std::string m_tag = "Default";
         bool m_alive = true;
+        Entity(const std::string& tag, size_t id) {}
+        Entity(const std::string& tag, size_t id, float xS,  Color color);
+        friend class EntityManager;
     public:
         std::shared_ptr<CTransform> cTransform;
         std::shared_ptr<CShape> cShape;
@@ -24,8 +27,6 @@ namespace game_2d {
         std::shared_ptr<CScore> cScore;
         std::shared_ptr<CInput> cInput;
         std::shared_ptr<CLifeSpan> cLifeSpan;
-        Entity(const std::string& tag, size_t id) {}
-        Entity(const std::string& tag, size_t id, float xS,  Color color);
         void update();
         sf::Shape& getSfShape() { 
             return cShape->getSfShape(); 

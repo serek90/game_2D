@@ -4,7 +4,7 @@
 namespace game_2d {
 
     void Game::run() {
-        player = std::make_unique<Entity>("player", 0, 10,  Color::Red);
+        player = entityManager.addEntity("player", 10, Color::Green);
         player->cInput = std::make_unique<CInput>();
         /*
         for(int i = 0; i < 10; i++)

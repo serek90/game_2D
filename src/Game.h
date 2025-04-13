@@ -8,7 +8,7 @@ namespace game_2d {
     class Game {
         const int windowWidth = 640;
         const int windowHeight = 480;
-        std::unique_ptr<Entity> player;
+        std::shared_ptr<Entity> player;
         sf::RenderWindow window;
         EntityManager entityManager;
         void sRender();
