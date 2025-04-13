@@ -3,8 +3,7 @@
 namespace game_2d {
     std::shared_ptr<Entity> EntityManager::addEntity(const std::string &tag, float xS,  sf::Color color) {
         auto e = std::shared_ptr<Entity>(new Entity(tag, m_totalEntities++, xS,  color));
-        m_entities.push_back(e);
-        m_entityMap[tag].push_back(e);
+        m_toAdd.push_back(e);
         return e;
     }
 
@@ -17,6 +16,17 @@ namespace game_2d {
     }
 
     void EntityManager::update() {
+        /* remove not alived */
+
+        /* add new */
+        for(auto n : m_toAdd) {
+            m_entities.push_back(n);
+            m_entityMap[n->tag()].push_back(n);
+            std::cout << n->tag() << std::endl;
+        }
+        m_toAdd.clear();
+
+        /* update position */
         for(auto &e : m_entities) {
             e->update();
         }

@@ -11,6 +11,9 @@ namespace game_2d {
         std::shared_ptr<Entity> player;
         sf::RenderWindow window;
         EntityManager entityManager;
+
+        void spawnBullet();
+
         void sRender();
         void sCollision();
         void sUserInput();
