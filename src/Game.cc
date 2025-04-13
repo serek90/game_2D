@@ -4,18 +4,18 @@
 namespace game_2d {
 
     void Game::run() {
-        player = entityManager.addEntity("player", 10, Color::Green);
+        player = entityManager.addEntity("player", 10, sf::Color::Blue);
         player->cInput = std::make_unique<CInput>();
 
         for(int i = 0; i < 10; i++)
         {
-            auto e = entityManager.addEntity("bullet", 2 * i, Color::Green);
+            auto e = entityManager.addEntity("bullet", 2 * i, sf::Color::Green);
             e->cTransform->velocity.x = 3;
             e->cTransform->velocity.y = 3;            
         }
         for(int i = 10; i < 20; i++)
         {
-            auto e  = entityManager.addEntity("enemy", 2 * i, Color::Red);
+            auto e  = entityManager.addEntity("enemy", 2 * i, sf::Color::Red);
             e->cTransform->velocity.x = 1;
             e->cTransform->velocity.y = 1;    
         }

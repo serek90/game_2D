@@ -11,7 +11,7 @@ struct shapesSpeed
     float y;
 };
 
-enum class Color { Red, Green, Blue };
+
 enum class shape_type { Rectangle, Circle, Polygon};
 
 namespace game_2d {
@@ -22,11 +22,9 @@ namespace game_2d {
         shapesSpeed speed;
         float xSize;
 
-        void setColor(Color color);
-
     public:
 
-        CShape(float xS, Color color);
+        CShape(float xS, sf::Color color);
 
         void updatePos(float w, float h);
         sf::Shape& getSfShape() { return *sfShape; }

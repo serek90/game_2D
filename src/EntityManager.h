@@ -16,7 +16,7 @@ namespace game_2d {
 
     public:
         EntityManager();
-        std::shared_ptr<Entity> addEntity(const std::string &tag, float xS,  Color color);
+        std::shared_ptr<Entity> addEntity(const std::string &tag, float xS,  sf::Color color);
         void update();
         EntityVec& getEntities();
         EntityVec& getEntities(const std::string &tag);
