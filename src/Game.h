@@ -15,6 +15,9 @@ namespace game_2d {
         void sCollision();
         void sUserInput();
         void sMovement();
+
+        //ToDo: Make it using radius component
+        void borderCollision(std::string str);
     public:
         Game() : window(sf::VideoMode(windowWidth, windowHeight), "SFML_works") {
             window.setFramerateLimit(60);

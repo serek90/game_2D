@@ -3,7 +3,7 @@
 
 namespace game_2d {
 
-    class CCollision {
+    struct CCollision {
         float radius;
         CCollision(float r) : radius{r} {}
     };

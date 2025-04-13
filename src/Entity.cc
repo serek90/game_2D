@@ -20,6 +20,7 @@ namespace game_2d {
         //Vec2 vel(xS,xS);
         Vec2 vel(0,0);
         cTransform = std::make_shared<CTransform>(pos, vel, 3.4);
+        cCollision = std::make_shared<CCollision>(xS);
     }
 }
 

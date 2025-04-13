@@ -6,18 +6,19 @@ namespace game_2d {
     void Game::run() {
         player = entityManager.addEntity("player", 10, Color::Green);
         player->cInput = std::make_unique<CInput>();
-        /*
+
         for(int i = 0; i < 10; i++)
         {
-            entityManager.addEntity("entity1", 2 * i, Color::Green);
+            auto e = entityManager.addEntity("bullet", 2 * i, Color::Green);
+            e->cTransform->velocity.x = 3;
+            e->cTransform->velocity.y = 3;            
         }
         for(int i = 10; i < 20; i++)
         {
-            if(i%2)
-               entityManager.addEntity("entity2", 2 * i, Color::Green);
-            else
-               entityManager.addEntity("entity2", 2 * i, Color::Red);
-        } */
+            auto e  = entityManager.addEntity("enemy", 2 * i, Color::Red);
+            e->cTransform->velocity.x = 1;
+            e->cTransform->velocity.y = 1;    
+        }
 
         /* ToDo: Implement PAUSE system */
         while (window.isOpen())
@@ -36,8 +37,10 @@ namespace game_2d {
 
         window.clear(sf::Color::Black);
 
-        auto ent = entityManager.getEntities("entity2");
-        for(auto &e : ent) {
+        for(auto &e : entityManager.getEntities("enemy")) {
+            window.draw(e->getSfShape());
+        }
+        for(auto &e : entityManager.getEntities("bullet")) {
             window.draw(e->getSfShape());
         }
         window.draw(player->getSfShape());
@@ -46,19 +49,19 @@ namespace game_2d {
     }
 
     void Game::sCollision() {
-        auto ent = entityManager.getEntities("entity2");
-        for(auto &e : ent) {
-            if(e->cTransform->pos.x <= 0 || e->cTransform->pos.x >= windowWidth)
-            {
-                std::cout << "Hit border X" << std::endl;
-                e->cTransform->velocity.x *= -1;
+
+        borderCollision("bullet");
+        borderCollision("enemy");
+        
+        for(auto &e : entityManager.getEntities("enemy")) {
+            for(auto &b : entityManager.getEntities("nullet")) {
+                auto v1 = b->cTransform->pos;
+                auto v2 = e->cTransform->pos;
+                if(v1.dist(v2) <= b->cCollision->radius + e->cCollision->radius) {
+                    std::cout << "Hey there is a hit" << std::endl;
+                }
             }
-            if(e->cTransform->pos.y  <= 0 || e->cTransform->pos.y  >= windowHeight)
-            {
-                std::cout << "Hit border Y" << std::endl;
-                e->cTransform->velocity.y *= -1;
-            }
-        }    
+        }
     }
 
     void Game::sUserInput() {
@@ -130,7 +133,29 @@ namespace game_2d {
             player->cTransform->velocity.x = 0;            
         }
 
+        for(auto &e : entityManager.getEntities("enemy")) {
+            e->update();
+        }
+        for(auto &e : entityManager.getEntities("bullet")) {
+            e->update();
+        }
+
         player->update();
+    }
+
+    void Game::borderCollision(std::string str) {
+        for(auto &e : entityManager.getEntities(str)) {
+            if(e->cTransform->pos.x <= 0 || e->cTransform->pos.x >= windowWidth)
+            {
+                std::cout << "Hit border X" << std::endl;
+                e->cTransform->velocity.x *= -1;
+            }
+            if(e->cTransform->pos.y  <= 0 || e->cTransform->pos.y  >= windowHeight)
+            {
+                std::cout << "Hit border Y" << std::endl;
+                e->cTransform->velocity.y *= -1;
+            }
+        }
     }
 
 }
