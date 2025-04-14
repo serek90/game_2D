@@ -16,7 +16,6 @@ namespace game_2d {
     }
 
     void EntityManager::update() {
-        /* remove not alived */
 
         /* add new */
         for(auto n : m_toAdd) {
@@ -25,6 +24,11 @@ namespace game_2d {
             std::cout << n->tag() << std::endl;
         }
         m_toAdd.clear();
+
+        /* remove not alived */
+        m_entities.erase(std::remove_if(m_entities.begin(), m_entities.end(), [](std::shared_ptr<Entity> e){ return !e->is_alive(); }), m_entities.end());
+        for(auto& [key,vec] : m_entityMap)
+            vec.erase(std::remove_if(vec.begin(), vec.end(), [](std::shared_ptr<Entity> e){ return !e->is_alive(); }), vec.end());
 
         /* update position */
         for(auto &e : m_entities) {

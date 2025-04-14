@@ -21,12 +21,15 @@ namespace game_2d {
         Entity(const std::string& tag, size_t id, float xS,  sf::Color color);
         friend class EntityManager;
     public:
+
         std::shared_ptr<CTransform> cTransform;
         std::shared_ptr<CShape> cShape;
         std::shared_ptr<CCollision> cCollision;
         std::shared_ptr<CScore> cScore;
         std::shared_ptr<CInput> cInput;
         std::shared_ptr<CLifeSpan> cLifeSpan;
+        void kill() { m_alive = false; }
+        bool is_alive() { return m_alive; }
         void update();
         std::string tag() { return m_tag; }
         sf::Shape& getSfShape() { 

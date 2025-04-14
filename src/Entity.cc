@@ -13,8 +13,8 @@ namespace game_2d {
 
         static int i = 0;
         std::srand(std::time({})); // use current time as seed for random generator
-        int rW = std::rand() % 640;
-        int rH = std::rand() %480;
+        int rW = xS * 10;//std::rand() % 640;
+        int rH = xS * 10; //std::rand() %480;
         Vec2 pos(rW,rH);
         i++;
         //Vec2 vel(xS,xS);

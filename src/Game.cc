@@ -7,7 +7,7 @@ namespace game_2d {
         player = entityManager.addEntity("player", 10, sf::Color::Blue);
         player->cInput = std::make_unique<CInput>();
 
-        for(int i = 0; i < 10; i++)
+        for(int i = 0; i < 8; i++)
         {
             auto e = entityManager.addEntity("bullet", 2 * i, sf::Color::Green);
             e->cTransform->velocity.x = 1 * i/2;
@@ -54,11 +54,11 @@ namespace game_2d {
         borderCollision("enemy");
         
         for(auto &e : entityManager.getEntities("enemy")) {
-            for(auto &b : entityManager.getEntities("nullet")) {
+            for(auto &b : entityManager.getEntities("bullet")) {
                 auto v1 = b->cTransform->pos;
                 auto v2 = e->cTransform->pos;
                 if(v1.dist(v2) <= b->cCollision->radius + e->cCollision->radius) {
-                    std::cout << "Hey there is a hit" << std::endl;
+                    e->kill();
                 }
             }
         }

@@ -14,6 +14,8 @@ namespace game_2d {
         EntityMap m_entityMap;
         size_t m_totalEntities = 0;
 
+        void removeEntity() {}
+
     public:
         EntityManager();
         std::shared_ptr<Entity> addEntity(const std::string &tag, float xS,  sf::Color color);
