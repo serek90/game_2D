@@ -21,10 +21,11 @@ namespace game_2d {
         std::shared_ptr<sf::Shape> sfShape;
         shapesSpeed speed;
         float xSize;
+        int _points;
 
     public:
 
-        CShape(float xS, sf::Color color);
+        CShape(float xS, int points, sf::Color color);
 
         void updatePos(float w, float h);
         sf::Shape& getSfShape() { return *sfShape; }
