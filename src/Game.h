@@ -11,6 +11,7 @@ namespace game_2d {
         std::shared_ptr<Entity> player;
         sf::RenderWindow window;
         EntityManager entityManager;
+        bool m_paused = false;
 
         void spawnBullet();
 

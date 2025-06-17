@@ -17,11 +17,14 @@ namespace game_2d {
         /* ToDo: Implement PAUSE system */
         while (window.isOpen())
         {
-            entityManager.update();
 
-            sEnemySpawner();
-            sMovement();
-            sCollision();
+            if(!m_paused) {
+                entityManager.update();
+                sEnemySpawner();
+                sMovement();
+                sCollision();
+            }
+
             sUserInput();
             sRender();
         }
@@ -61,8 +64,10 @@ namespace game_2d {
         sf::Event event;
         while (window.pollEvent(event))
         {
-            if (event.type == sf::Event::Closed)
+            if (event.type == sf::Event::Closed) {
                 window.close();
+                return;
+            }
 
             if (event.type == sf::Event::KeyPressed) {
 
@@ -82,6 +87,9 @@ namespace game_2d {
                     case sf::Keyboard::W:
                     player->cInput->shoot = true;
                     return;
+                    case sf::Keyboard::P:
+                    m_paused = !m_paused;
+                    break;
                     default:
                     return;
                 }
@@ -130,8 +138,6 @@ namespace game_2d {
         if(player->cInput->shoot) {
             spawnBullet();
         }
-
-        entityManager.update();
     }
 
     void Game::borderCollision(std::string str) {
