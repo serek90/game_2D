@@ -5,7 +5,7 @@ namespace game_2d {
 
     void Game::run() {
 
-        sPlayerSpawner();
+        spawnPlayer();
 
         for(int i = 10; i < 20; i++)
         {
@@ -158,7 +158,7 @@ namespace game_2d {
             std::cout << "Create bullet here";
     }
 
-    void Game::sPlayerSpawner() {
+    void Game::spawnPlayer() {
         auto entity = entityManager.addEntity("player", 10, sf::Color::Blue);
         player = entity;
     }

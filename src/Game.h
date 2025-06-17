@@ -29,7 +29,7 @@ namespace game_2d {
 
         // Systems
         void sEnemySpawner();
-        void sPlayerSpawner();
+        void spawnPlayer();
     };
 }
 
