@@ -154,20 +154,20 @@ namespace game_2d {
     }
 
     void Game::spawnBullet() {
-            auto e = entityManager.addEntity("bullet", 8, sf::Color::Green);
+            auto e = entityManager.addEntity("bullet", 8, sf::Color::Green, 9);
             e->cTransform->velocity = { 4, 4 };
             e->cTransform->pos = player->cTransform->pos;
             std::cout << "Create bullet here";
     }
 
     void Game::spawnEnemy() {
-            auto e = entityManager.addEntity("enemy", 16, sf::Color::Red);
+            auto e = entityManager.addEntity("enemy", 16, sf::Color::Red, 3);
             e->cTransform->velocity = { 2, 2 };
             e->cTransform->pos = { 80, 80 };
     }
 
     void Game::spawnPlayer() {
-        auto entity = entityManager.addEntity("player", 10, sf::Color::Blue);
+        auto entity = entityManager.addEntity("player", 10, sf::Color::Blue, 4);
         player = entity;
     }
 

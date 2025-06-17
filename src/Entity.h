@@ -18,7 +18,7 @@ namespace game_2d {
         const std::string m_tag = "Default";
         bool m_alive = true;
         Entity(const std::string& tag, size_t id) {}
-        Entity(const std::string& tag, size_t id, float xS,  sf::Color color);
+        Entity(const std::string& tag, size_t id, float xS,  sf::Color color, int p);
         friend class EntityManager;
     public:
 
