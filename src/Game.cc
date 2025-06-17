@@ -132,6 +132,12 @@ namespace game_2d {
             spawnBullet();
             player->cInput->shoot = false;
         }
+
+        /* update position */
+        for(auto &e : entityManager.getEntities()) {
+            e->cTransform->pos += e->cTransform->velocity;
+            e->cShape->updatePos(e->cTransform->pos.x, e->cTransform->pos.y);
+        }
     }
 
     void Game::borderCollision(std::string str) {

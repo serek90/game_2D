@@ -30,7 +30,6 @@ namespace game_2d {
         std::shared_ptr<CLifeSpan> cLifeSpan;
         void kill() { m_alive = false; }
         bool is_alive() { return m_alive; }
-        void update();
         std::string tag() { return m_tag; }
         sf::Shape& getSfShape() { 
             return cShape->getSfShape(); 

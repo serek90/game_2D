@@ -3,10 +3,6 @@
 
 
 namespace game_2d {
-    void Entity::update() {
-        cTransform->pos += cTransform->velocity;
-        cShape->updatePos(cTransform->pos.x, cTransform->pos.y);
-    }
 
     Entity::Entity(const std::string& tag, size_t id, float xS,  sf::Color color) : m_tag{tag} {
         cShape = std::make_shared<CShape>(xS, 9, color);
