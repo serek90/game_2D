@@ -6,12 +6,7 @@ namespace game_2d {
     void Game::run() {
 
         sPlayerSpawner();
-        for(int i = 0; i < 8; i++)
-        {
-            auto e = entityManager.addEntity("bullet", 2 * i, sf::Color::Green);
-            e->cTransform->velocity.x = 1 * i/2;
-            e->cTransform->velocity.y = 1 * i/2;            
-        }
+
         for(int i = 10; i < 20; i++)
         {
             auto e  = entityManager.addEntity("enemy", 2 * i, sf::Color::Red);
@@ -49,7 +44,6 @@ namespace game_2d {
 
     void Game::sCollision() {
 
-        borderCollision("bullet");
         borderCollision("enemy");
         
         for(auto &e : entityManager.getEntities("enemy")) {
@@ -85,7 +79,13 @@ namespace game_2d {
                     case sf::Keyboard::Right:
                     player->cInput->right = true;
                     break;
+                    case sf::Keyboard::W:
+                    player->cInput->shoot = true;
+                    return;
+                    default:
+                    return;
                 }
+                player->cInput->press = true;
 
             } else if (event.type == sf::Event::KeyReleased) {
 
@@ -101,8 +101,11 @@ namespace game_2d {
                     break;
                     case sf::Keyboard::Right:
                     player->cInput->right = false;
-                    break;              
+                    break;
+                    default:
+                    return;
                 }
+                player->cInput->press = false;
             }
         }
     }
@@ -124,7 +127,10 @@ namespace game_2d {
             player->cTransform->velocity.x = 0;            
         }
 
-        
+        if(player->cInput->shoot) {
+            spawnBullet();
+        }
+
         entityManager.update();
     }
 
@@ -144,7 +150,12 @@ namespace game_2d {
     }
 
     void Game::spawnBullet() {
-
+            auto e = entityManager.addEntity("bullet", 8, sf::Color::Green);
+            e->cTransform->velocity.x = 4;
+            e->cTransform->velocity.y = 4;
+            player->cInput->shoot = false;
+            e->cTransform->pos = player->cTransform->pos;
+            std::cout << "Create bullet here";
     }
 
     void Game::sPlayerSpawner() {

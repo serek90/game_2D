@@ -9,6 +9,7 @@ namespace game_2d {
         bool right = false;
         bool down  = false;
         bool shoot = false;
+        bool press = false;
     };
 }
 
