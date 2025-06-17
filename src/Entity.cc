@@ -9,7 +9,7 @@ namespace game_2d {
     }
 
     Entity::Entity(const std::string& tag, size_t id, float xS,  sf::Color color) : m_tag{tag} {
-        cShape = std::make_shared<CShape>(xS, 6, color);
+        cShape = std::make_shared<CShape>(xS, 9, color);
 
         static int i = 0;
         std::srand(std::time({})); // use current time as seed for random generator
@@ -21,6 +21,7 @@ namespace game_2d {
         Vec2 vel(0,0);
         cTransform = std::make_shared<CTransform>(pos, vel, 3.4);
         cCollision = std::make_shared<CCollision>(xS);
+        cInput = std::make_shared<CInput>();
     }
 }
 

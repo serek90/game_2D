@@ -4,9 +4,8 @@
 namespace game_2d {
 
     void Game::run() {
-        player = entityManager.addEntity("player", 10, sf::Color::Blue);
-        player->cInput = std::make_unique<CInput>();
 
+        sPlayerSpawner();
         for(int i = 0; i < 8; i++)
         {
             auto e = entityManager.addEntity("bullet", 2 * i, sf::Color::Green);
@@ -145,6 +144,15 @@ namespace game_2d {
     }
 
     void Game::spawnBullet() {
+
+    }
+
+    void Game::sPlayerSpawner() {
+        auto entity = entityManager.addEntity("player", 10, sf::Color::Blue);
+        player = entity;
+    }
+
+    void Game::sEnemySpawner() {
 
     }
 

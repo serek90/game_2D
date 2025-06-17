@@ -28,7 +28,8 @@ namespace game_2d {
         void run();
 
         // Systems
-        void sEnemySpawner() {}
+        void sEnemySpawner();
+        void sPlayerSpawner();
     };
 }
 
