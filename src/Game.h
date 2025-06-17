@@ -12,9 +12,15 @@ namespace game_2d {
         sf::RenderWindow window;
         EntityManager entityManager;
         bool m_paused = false;
+        size_t m_frame_ctr = 0;
 
         void spawnBullet();
+        void spawnPlayer();
+        void spawnEnemy();
 
+        void sEnemySpawner();
+
+        // Systems
         void sRender();
         void sCollision();
         void sUserInput();
@@ -28,9 +34,6 @@ namespace game_2d {
          }
         void run();
 
-        // Systems
-        void sEnemySpawner();
-        void spawnPlayer();
     };
 }
 

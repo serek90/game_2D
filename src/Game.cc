@@ -7,18 +7,11 @@ namespace game_2d {
 
         spawnPlayer();
 
-        for(int i = 10; i < 20; i++)
-        {
-            auto e  = entityManager.addEntity("enemy", 2 * i, sf::Color::Red);
-            e->cTransform->velocity.x = 1 * i/2;
-            e->cTransform->velocity.y = 1 * i/2;    
-        }
-
-        /* ToDo: Implement PAUSE system */
         while (window.isOpen())
         {
 
             if(!m_paused) {
+                m_frame_ctr++;
                 entityManager.update();
                 sEnemySpawner();
                 sMovement();
@@ -137,6 +130,7 @@ namespace game_2d {
 
         if(player->cInput->shoot) {
             spawnBullet();
+            player->cInput->shoot = false;
         }
     }
 
@@ -157,11 +151,15 @@ namespace game_2d {
 
     void Game::spawnBullet() {
             auto e = entityManager.addEntity("bullet", 8, sf::Color::Green);
-            e->cTransform->velocity.x = 4;
-            e->cTransform->velocity.y = 4;
-            player->cInput->shoot = false;
+            e->cTransform->velocity = { 4, 4 };
             e->cTransform->pos = player->cTransform->pos;
             std::cout << "Create bullet here";
+    }
+
+    void Game::spawnEnemy() {
+            auto e = entityManager.addEntity("enemy", 16, sf::Color::Red);
+            e->cTransform->velocity = { 2, 2 };
+            e->cTransform->pos = { 80, 80 };
     }
 
     void Game::spawnPlayer() {
@@ -170,7 +168,8 @@ namespace game_2d {
     }
 
     void Game::sEnemySpawner() {
-
+        if(m_frame_ctr % 120 == 0)
+            spawnEnemy();
     }
 
 }
