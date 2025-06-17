@@ -15,6 +15,7 @@ namespace game_2d {
         sfShape = std::make_shared<sf::CircleShape>(xS, points);
 
         sfShape->setPosition(100.0f,100.0f);
+        sfShape->setOrigin(sfShape->getRadius(), sfShape->getRadius());
         sfShape->setFillColor(color);
         speed.x = speed.y = 1.0f;
     }

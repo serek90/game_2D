@@ -18,13 +18,13 @@ namespace game_2d {
 
     class CShape
     {
-        std::shared_ptr<sf::Shape> sfShape;
+
         shapesSpeed speed;
         float xSize;
         int _points;
 
     public:
-
+        std::shared_ptr<sf::CircleShape> sfShape;
         CShape(float xS, int points, sf::Color color);
 
         void updatePos(float w, float h);
