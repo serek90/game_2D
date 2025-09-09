@@ -15,6 +15,8 @@ namespace game_2d {
         size_t m_totalEntities = 0;
 
         void removeEntity() {}
+        void updateAdd();
+        void updateRemove();
 
     public:
         EntityManager();
