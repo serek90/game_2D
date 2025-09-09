@@ -110,21 +110,23 @@ namespace game_2d {
     }
 
     void Game::sMovement() {
+        Vec2 dir = { 0, 0 };
+
         if(player->cInput->up) {
-            player->cTransform->velocity.y = -3;
+            dir.y -= 1;
         } else if(player->cInput->down) {
-            player->cTransform->velocity.y = 3;
-        } else {
-            player->cTransform->velocity.y = 0;            
+            dir.y += 1;
         }
 
         if(player->cInput->right) {
-            player->cTransform->velocity.x = 3;
+            dir.x += 1;
         } else if(player->cInput->left) {
-            player->cTransform->velocity.x = -3;
-        } else {
-            player->cTransform->velocity.x = 0;            
+            dir.x += -1;
         }
+        if(player->cInput->press)
+            player->cTransform->direction = dir;
+
+        player->cTransform->velocity = dir * 3;
 
         if(player->cInput->shoot) {
             spawnBullet();
@@ -155,9 +157,8 @@ namespace game_2d {
 
     void Game::spawnBullet() {
             auto e = entityManager.addEntity("bullet", 8, sf::Color::Green, 9);
-            e->cTransform->velocity = { 4, 4 };
+            e->cTransform->velocity = player->cTransform->direction * 2;
             e->cTransform->pos = player->cTransform->pos;
-            std::cout << "Create bullet here";
     }
 
     void Game::spawnEnemy() {
