@@ -28,12 +28,11 @@ namespace game_2d {
         std::shared_ptr<CScore> cScore;
         std::shared_ptr<CInput> cInput;
         std::shared_ptr<CLifeSpan> cLifeSpan;
+
         void kill() { m_alive = false; }
-        bool is_alive() { return m_alive; }
-        std::string tag() { return m_tag; }
-        sf::Shape& getSfShape() { 
-            return cShape->getSfShape(); 
-        }
+        bool is_alive() const { return m_alive; }
+        const std::string tag() const { return m_tag; }
+        const size_t id() const { return m_id; }
    };
 }
 

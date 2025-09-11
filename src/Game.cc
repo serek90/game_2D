@@ -30,7 +30,7 @@ namespace game_2d {
         for(auto &e : entityManager.getEntities()) {
             e->cTransform->angle += 1.0f;
             e->cShape->sfShape->setRotation(e->cTransform->angle);
-            window.draw(e->getSfShape());
+            window.draw(e->cShape->getSfShape());
         }
  
         window.display();
