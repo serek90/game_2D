@@ -4,7 +4,7 @@
 namespace game_2d {
 
     struct CCollision {
-        float radius;
+        float radius = 0;
         CCollision(float r) : radius{r} {}
     };
 
