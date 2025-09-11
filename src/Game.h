@@ -4,14 +4,21 @@
 #include <SFML/Window.hpp>
 #include "EntityManager.h"
 
+struct PlayerConfig { int SR, CR, FR, FG, FB, OR, OG, OB, OT, V; float S; };
+struct EnemyConfig  { int SR, CR, OR, OG, OB, OT, VMIN, VMAX, L, SI; float SMIN, SMAX; };
+struct BulletConfig { int SR, CR, FR, FG, FB, OR, OG, OB, OT, V, L; float S; };
+
 namespace game_2d {
     class Game {
         const int windowWidth = 640;
         const int windowHeight = 480;
-        std::shared_ptr<Entity> player;
+
         sf::RenderWindow window;
         EntityManager entityManager;
         bool m_paused = false;
+
+        std::shared_ptr<Entity> player;
+
         size_t m_frame_ctr = 0;
 
         void spawnBullet();
