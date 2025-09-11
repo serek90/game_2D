@@ -136,7 +136,7 @@ namespace game_2d {
         /* update position */
         for(auto &e : entityManager.getEntities()) {
             e->cTransform->pos += e->cTransform->velocity;
-            e->cShape->updatePos(e->cTransform->pos.x, e->cTransform->pos.y);
+            e->cShape->sfShape.setPosition(e->cTransform->pos.x, e->cTransform->pos.y);
         }
     }
 

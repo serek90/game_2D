@@ -9,14 +9,15 @@ namespace game_2d {
 
     class CShape
     {
-        float xSize;
-        int _points;
-
     public:
         sf::CircleShape sfShape;
-        CShape(float xS, int points, sf::Color color);
 
-        void updatePos(float w, float h);
+        CShape(float radius,  int points, sf::Color color) : sfShape(radius, points)
+        {
+            sfShape.setPosition(100.0f,100.0f);
+            sfShape.setOrigin(radius, radius);
+            sfShape.setFillColor(color);
+        }
     };
 }
 
