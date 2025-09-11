@@ -7,9 +7,8 @@
 #include "Vec2.h"
 
 namespace game_2d {
-  class CTransform
+  struct CTransform
   {
-  public:
     Vec2 pos = { 0, 0 };
     Vec2 velocity = { 0, 0 };
     Vec2 direction = { 0, 0 };

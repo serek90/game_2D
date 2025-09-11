@@ -3,9 +3,9 @@
 
 namespace game_2d {
 
-    class CScore {
-        int score_;
-        CScore(int score) : score_{score} {}
+    struct CScore {
+        int score = 0;
+        CScore(int s) : score{s} {}
     };
 
 }

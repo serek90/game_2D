@@ -3,10 +3,10 @@
 
 namespace game_2d {
 
-    class CLifeSpan {
-        int remaining_ = 0;
-        int total_     = 0;
-        CLifeSpan(int total) : remaining_{total}, total_{total} {}
+    struct CLifeSpan {
+        int remaining = 0;
+        int total     = 0;
+        CLifeSpan(int total_) : remaining{total_}, total{total_} {}
     };
 
 }

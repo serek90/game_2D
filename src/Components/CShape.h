@@ -7,9 +7,8 @@
 
 namespace game_2d {
 
-    class CShape
+    struct CShape
     {
-    public:
         sf::CircleShape sfShape;
 
         CShape(float radius,  int points, sf::Color color) : sfShape(radius, points)
