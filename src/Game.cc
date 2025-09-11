@@ -1,180 +1,195 @@
 #include "Game.h"
 #include <memory>
+#include <fstream>
 
 namespace game_2d {
 
-    void Game::run() {
+Game::Game(const std:: string &path)
+    : m_window(sf::VideoMode(windowWidth, windowHeight), "SFML_works") {
 
-        spawnPlayer();
+    // TODO:: read config file here and write to config structures
+    std::fstream fin(path);
+    m_window.setFramerateLimit(60);
+}
 
-        while (window.isOpen())
-        {
+void Game::run() {
 
-            if(!m_paused) {
-                m_frame_ctr++;
-                entityManager.update();
-                sEnemySpawner();
-                sMovement();
-                sCollision();
-            }
+    spawnPlayer();
+    spawnText();
 
-            sUserInput();
-            sRender();
+    while (m_window.isOpen()) {
+
+        if(!m_paused) {
+            m_frame_ctr++;
+            m_entities.update();
+            sEnemySpawner();
+            sMovement();
+            sCollision();
         }
+        sUserInput();
+        sRender();
     }
+}
 
     void Game::sRender() {
 
-        window.clear(sf::Color::Black);
+    m_window.clear(sf::Color::Black);
 
-        for(auto &e : entityManager.getEntities()) {
-            e->cTransform->angle += 1.0f;
-            e->cShape->sfShape.setRotation(e->cTransform->angle);
-            window.draw(e->cShape->sfShape);
-        }
- 
-        window.display();
+    m_window.draw(m_text);
+
+    for(auto &e : m_entities.getEntities()) {
+        e->cTransform->angle += 1.0f;
+        e->cShape->sfShape.setRotation(e->cTransform->angle);
+        m_window.draw(e->cShape->sfShape);
     }
+ 
+    m_window.display();
+}
 
-    void Game::sCollision() {
+void Game::sCollision() {
 
-        borderCollision("enemy");
+    borderCollision("enemy");
         
-        for(auto &e : entityManager.getEntities("enemy")) {
-            for(auto &b : entityManager.getEntities("bullet")) {
-                auto v1 = b->cTransform->pos;
-                auto v2 = e->cTransform->pos;
-                if(v1.dist(v2) <= b->cCollision->radius + e->cCollision->radius) {
-                    e->kill();
-                }
+    for(auto &e : m_entities.getEntities("enemy")) {
+        for(auto &b : m_entities.getEntities("bullet")) {
+            auto v1 = b->cTransform->pos;
+            auto v2 = e->cTransform->pos;
+            if(v1.dist(v2) <= b->cCollision->radius + e->cCollision->radius) {
+                e->kill();
             }
         }
     }
+}
 
-    void Game::sUserInput() {
-        sf::Event event;
-        while (window.pollEvent(event))
-        {
-            if (event.type == sf::Event::Closed) {
-                window.close();
+void Game::sUserInput() {
+    sf::Event event;
+    while (m_window.pollEvent(event))
+    {
+        if (event.type == sf::Event::Closed) {
+            m_window.close();
+            return;
+        }
+
+        if (event.type == sf::Event::KeyPressed) {
+
+            switch(event.key.code) {
+                case sf::Keyboard::Up:
+                m_player->cInput->up = true;
+                break;
+                case sf::Keyboard::Down:
+                m_player->cInput->down = true;
+                break;
+                case sf::Keyboard::Left:
+                m_player->cInput->left = true;
+                break;
+                case sf::Keyboard::Right:
+                m_player->cInput->right = true;
+                break;
+                case sf::Keyboard::W:
+                m_player->cInput->shoot = true;
+                return;
+                case sf::Keyboard::P:
+                m_paused = !m_paused;
+                break;
+                default:
                 return;
             }
+            m_player->cInput->press = true;
 
-            if (event.type == sf::Event::KeyPressed) {
+        } else if (event.type == sf::Event::KeyReleased) {
 
-                switch(event.key.code) {
-                    case sf::Keyboard::Up:
-                    player->cInput->up = true;
-                    break;
-                    case sf::Keyboard::Down:
-                    player->cInput->down = true;
-                    break;
-                    case sf::Keyboard::Left:
-                    player->cInput->left = true;
-                    break;
-                    case sf::Keyboard::Right:
-                    player->cInput->right = true;
-                    break;
-                    case sf::Keyboard::W:
-                    player->cInput->shoot = true;
-                    return;
-                    case sf::Keyboard::P:
-                    m_paused = !m_paused;
-                    break;
-                    default:
-                    return;
-                }
-                player->cInput->press = true;
-
-            } else if (event.type == sf::Event::KeyReleased) {
-
-                switch(event.key.code) {
-                    case sf::Keyboard::Up:
-                    player->cInput->up = false;
-                    break;
-                    case sf::Keyboard::Down:
-                    player->cInput->down = false;
-                    break;
-                    case sf::Keyboard::Left:
-                    player->cInput->left = false;
-                    break;
-                    case sf::Keyboard::Right:
-                    player->cInput->right = false;
-                    break;
-                    default:
-                    return;
-                }
-                player->cInput->press = false;
+            switch(event.key.code) {
+                case sf::Keyboard::Up:
+                m_player->cInput->up = false;
+                break;
+                case sf::Keyboard::Down:
+                m_player->cInput->down = false;
+                break;
+                case sf::Keyboard::Left:
+                m_player->cInput->left = false;
+                break;
+                case sf::Keyboard::Right:
+                m_player->cInput->right = false;
+                break;
+                default:
+                return;
             }
+            m_player->cInput->press = false;
         }
     }
+}
 
-    void Game::sMovement() {
-        Vec2 dir = { 0, 0 };
+void Game::sMovement() {
+    Vec2 dir = { 0, 0 };
 
-        if(player->cInput->up) {
-            dir.y -= 1;
-        } else if(player->cInput->down) {
-            dir.y += 1;
-        }
-
-        if(player->cInput->right) {
-            dir.x += 1;
-        } else if(player->cInput->left) {
-            dir.x += -1;
-        }
-        if(player->cInput->press)
-            player->cTransform->direction = dir;
-
-        player->cTransform->velocity = dir * 3;
-
-        if(player->cInput->shoot) {
-            spawnBullet();
-            player->cInput->shoot = false;
-        }
-
-        /* update position */
-        for(auto &e : entityManager.getEntities()) {
-            e->cTransform->pos += e->cTransform->velocity;
-            e->cShape->sfShape.setPosition(e->cTransform->pos.x, e->cTransform->pos.y);
-        }
+    if(m_player->cInput->up) {
+        dir.y -= 1;
+    } else if(m_player->cInput->down) {
+        dir.y += 1;
     }
 
-    void Game::borderCollision(std::string str) {
-        for(auto &e : entityManager.getEntities(str)) {
-            if(e->cTransform->pos.x <= 0 || e->cTransform->pos.x >= windowWidth)
-            {
-                //std::cout << "Hit border X" << std::endl;
-                e->cTransform->velocity.x *= -1;
-            }
-            if(e->cTransform->pos.y  <= 0 || e->cTransform->pos.y  >= windowHeight)
-            {
-                //std::cout << "Hit border Y" << std::endl;
-                e->cTransform->velocity.y *= -1;
-            }
+    if(m_player->cInput->right) {
+        dir.x += 1;
+    } else if(m_player->cInput->left) {
+        dir.x += -1;
+    }
+    if(m_player->cInput->press)
+        m_player->cTransform->direction = dir;
+
+    m_player->cTransform->velocity = dir * 3;
+
+    if(m_player->cInput->shoot) {
+        spawnBullet();
+        m_player->cInput->shoot = false;
+    }
+
+    /* update position */
+    for(auto &e : m_entities.getEntities()) {
+        e->cTransform->pos += e->cTransform->velocity;
+        e->cShape->sfShape.setPosition(e->cTransform->pos.x, e->cTransform->pos.y);
+    }
+}
+
+void Game::borderCollision(std::string str) {
+    for(auto &e : m_entities.getEntities(str)) {
+        if(e->cTransform->pos.x <= 0 || e->cTransform->pos.x >= windowWidth) {
+            e->cTransform->velocity.x *= -1;
+        }
+        if(e->cTransform->pos.y  <= 0 || e->cTransform->pos.y  >= windowHeight) {
+            e->cTransform->velocity.y *= -1;
         }
     }
+}
 
-    void Game::spawnBullet() {
-            auto e = entityManager.addEntity("bullet", 8, sf::Color::Green, 9);
-            e->cTransform->velocity = player->cTransform->direction * 2;
-            e->cTransform->pos = player->cTransform->pos;
-    }
+void Game::spawnBullet() {
+    auto e = m_entities.addEntity("bullet", 8, sf::Color::Green, 9);
+    e->cTransform->velocity = m_player->cTransform->direction * 2;
+    e->cTransform->pos = m_player->cTransform->pos;
+}
 
-    void Game::spawnEnemy() {
-            auto e = entityManager.addEntity("enemy", 16, sf::Color::Red, 3);
-            e->cTransform->velocity = { 2, 2 };
-            e->cTransform->pos = { 80, 80 };
-    }
+void Game::spawnEnemy() {
+     auto e = m_entities.addEntity("enemy", 16, sf::Color::Red, 3);
 
-    void Game::spawnPlayer() {
-        auto entity = entityManager.addEntity("player", 10, sf::Color::Blue, 4);
-        player = entity;
-    }
+     e->cTransform->velocity = { 2, 2 };
 
-    void Game::sEnemySpawner() {
-        if(m_frame_ctr % 120 == 0)
-            spawnEnemy();
-    }
+    float ex = std::rand() % m_window.getSize().x;
+    float ey = std::rand() % m_window.getSize().y;
+    e->cTransform->pos = { ex, ey };
+}
+
+void Game::spawnPlayer() {
+    auto entity = m_entities.addEntity("player", 20, sf::Color::Blue, 8);
+    m_player = entity;
+}
+
+void Game::spawnText() {
+    if (!m_font.loadFromFile("arial.ttf"))
+        std::cout << "Font loading error\n";
+}
+
+void Game::sEnemySpawner() {
+    if(m_frame_ctr % m_enemySpawnTime == 0)
+        spawnEnemy();
+}
 
 }
