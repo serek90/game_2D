@@ -29,8 +29,8 @@ namespace game_2d {
 
         for(auto &e : entityManager.getEntities()) {
             e->cTransform->angle += 1.0f;
-            e->cShape->sfShape->setRotation(e->cTransform->angle);
-            window.draw(e->cShape->getSfShape());
+            e->cShape->sfShape.setRotation(e->cTransform->angle);
+            window.draw(e->cShape->sfShape);
         }
  
         window.display();
