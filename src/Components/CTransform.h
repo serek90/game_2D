@@ -13,7 +13,7 @@ namespace game_2d {
     Vec2 pos = { 0, 0 };
     Vec2 velocity = { 0, 0 };
     Vec2 direction = { 0, 0 };
-    float angle;
+    float angle = 0;
 
     CTransform(const Vec2 &p, const Vec2 &v, float ang)
       : pos{p}, velocity{v}, angle{ang} {}
