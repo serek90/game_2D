@@ -59,6 +59,11 @@ void Game::sCollision() {
             }
         }
     }
+
+    for(auto &b : m_entities.getEntities("bullet")) {
+        if(b->cLifeSpan->remaining-- == 0)
+            b->kill();
+    }
 }
 
 void Game::sUserInput() {
@@ -163,8 +168,9 @@ void Game::borderCollision(std::string str) {
 
 void Game::spawnBullet() {
     auto e = m_entities.addEntity("bullet", 8, sf::Color::Green, 9);
-    e->cTransform->velocity = m_player->cTransform->direction * 2;
+    e->cTransform->velocity = m_player->cTransform->direction * 8;
     e->cTransform->pos = m_player->cTransform->pos;
+    e->cLifeSpan = std::make_shared<CLifeSpan>(40);
 }
 
 void Game::spawnEnemy() {
