@@ -60,6 +60,14 @@ void Game::sCollision() {
                 m_score++;
             }
         }
+
+        /* player collision */
+        auto v1 = m_player->cTransform->pos;
+        auto v2 = e->cTransform->pos;
+        if(v1.dist(v2) <= m_player->cCollision->radius + e->cCollision->radius) {
+            m_score = 0;
+            e->kill();
+        }
     }
 
     for(auto &b : m_entities.getEntities("bullet")) {
