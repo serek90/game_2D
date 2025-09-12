@@ -31,10 +31,11 @@ void Game::run() {
     }
 }
 
-    void Game::sRender() {
+void Game::sRender() {
 
     m_window.clear(sf::Color::Black);
 
+    m_text.setString("points: " + std::to_string(m_score));
     m_window.draw(m_text);
 
     for(auto &e : m_entities.getEntities()) {
@@ -56,6 +57,7 @@ void Game::sCollision() {
             auto v2 = e->cTransform->pos;
             if(v1.dist(v2) <= b->cCollision->radius + e->cCollision->radius) {
                 e->kill();
+                m_score++;
             }
         }
     }
