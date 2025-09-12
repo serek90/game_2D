@@ -151,8 +151,9 @@ void Game::sMovement() {
     }
 
     /* update position */
+    float deltaTime = m_clock.restart().asSeconds();
     for(auto &e : m_entities.getEntities()) {
-        e->cTransform->pos += e->cTransform->velocity;
+        e->cTransform->pos += e->cTransform->velocity * deltaTime * 20;
         e->cShape->sfShape.setPosition(e->cTransform->pos.x, e->cTransform->pos.y);
     }
 }
@@ -193,6 +194,11 @@ void Game::spawnPlayer() {
 void Game::spawnText() {
     if (!m_font.loadFromFile("arial.ttf"))
         std::cout << "Font loading error\n";
+
+    m_text.setFont(m_font);
+    m_text.setCharacterSize(24);
+    m_text.setFillColor(sf::Color::Yellow);
+    m_text.setPosition(0, 0);
 }
 
 void Game::sEnemySpawner() {

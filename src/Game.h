@@ -17,7 +17,7 @@ class Game {
 
     sf::RenderWindow    m_window;
     sf::Font            m_font;
-    sf::Text            m_text{"points:", m_font, 30};
+    sf::Text            m_text;
     EntityManager       m_entities;
     bool                m_paused = false;
     int                 m_score = 0;
@@ -26,6 +26,7 @@ class Game {
     PlayerConfig        m_playerConfig;
     EnemyConfig         m_EnemyConfig;
     BulletConfig        m_BulletConfig;
+    sf::Clock           m_clock;
 
     std::shared_ptr<Entity> m_player;
 
