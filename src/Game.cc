@@ -1,21 +1,40 @@
 #include "Game.h"
 #include <memory>
+#include <sstream>
+#include <string>
 #include <fstream>
+
 
 namespace game_2d {
 
-Game::Game(const std:: string &path)
-    : m_window(sf::VideoMode(windowWidth, windowHeight), "SFML_works") {
+Game::Game(const std:: string &path) {
 
-    // TODO:: read config file here and write to config structures
     std::fstream fin(path);
-    m_window.setFramerateLimit(60);
+    std::string line_name[5];
+    int window_x, window_y, rate_limit;
+    std::string font_path;
+    int text_r, text_g, text_b, text_size;
+
+    if (!(fin >> line_name[0] >> window_x >> window_y >> rate_limit
+              >> line_name[1] >> font_path >> text_r >> text_g >> text_b >> text_size )) {
+        std::cout << "Error reading file\n";
+    }
+
+    m_window.create(sf::VideoMode(window_x, window_y), "game_2d");
+    m_window.setFramerateLimit(rate_limit);
+
+    if (!m_font.loadFromFile(font_path))
+        std::cout << "Font loading error\n";
+
+    m_text.setFont(m_font);
+    m_text.setCharacterSize(24);
+    m_text.setFillColor(sf::Color(255,255,255));
+    m_text.setPosition(0, 0);
 }
 
 void Game::run() {
 
     spawnPlayer();
-    spawnText();
 
     while (m_window.isOpen()) {
 
@@ -168,10 +187,10 @@ void Game::sMovement() {
 
 void Game::borderCollision(std::string str) {
     for(auto &e : m_entities.getEntities(str)) {
-        if(e->cTransform->pos.x <= 0 || e->cTransform->pos.x >= windowWidth) {
+        if(e->cTransform->pos.x <= 0 || e->cTransform->pos.x >= m_window.getSize().x) {
             e->cTransform->velocity.x *= -1;
         }
-        if(e->cTransform->pos.y  <= 0 || e->cTransform->pos.y  >= windowHeight) {
+        if(e->cTransform->pos.y  <= 0 || e->cTransform->pos.y  >= m_window.getSize().y) {
             e->cTransform->velocity.y *= -1;
         }
     }
@@ -197,16 +216,6 @@ void Game::spawnEnemy() {
 void Game::spawnPlayer() {
     auto entity = m_entities.addEntity("player", 20, sf::Color::Blue, 8);
     m_player = entity;
-}
-
-void Game::spawnText() {
-    if (!m_font.loadFromFile("arial.ttf"))
-        std::cout << "Font loading error\n";
-
-    m_text.setFont(m_font);
-    m_text.setCharacterSize(24);
-    m_text.setFillColor(sf::Color::Yellow);
-    m_text.setPosition(0, 0);
 }
 
 void Game::sEnemySpawner() {

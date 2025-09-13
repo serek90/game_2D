@@ -12,9 +12,6 @@ struct BulletConfig { int SR, CR, FR, FG, FB, OR, OG, OB, OT, V, L; float S; };
 namespace game_2d {
     
 class Game {
-    const int windowWidth = 640;
-    const int windowHeight = 480;
-
     sf::RenderWindow    m_window;
     sf::Font            m_font;
     sf::Text            m_text;
@@ -38,7 +35,6 @@ class Game {
     void spawnBullet(std::shared_ptr<Entity> entity, const Vec2 &mousePos);
     void spawnSmallEnemies(std::shared_ptr<Entity> entity);
     void spawnSpecialWeapon(std::shared_ptr<Entity> entity);
-    void spawnText();
 
     // Systems
     void sRender();
