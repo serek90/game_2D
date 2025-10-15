@@ -30,14 +30,26 @@ void Scene_Play::spawnEnemy() {
 
     e->cTransform->velocity = { 2, 2 };
 
-    //float ex = std::rand() % m_window.getSize().x;
-    //float ey = std::rand() % m_window.getSize().y;
-    float ex = 100.0f, ey = 100.0f;
+    float ex = std::rand() % m_game->window().getSize().x;
+    float ey = std::rand() % m_game->window().getSize().y;
+
     e->cTransform->pos = { ex, ey };
+}
+
+void Scene_Play::sMovement() {
+    Vec2 dir = { 0, 0 };
+
+    /* update position */
+    float deltaTime = m_clock.restart().asSeconds();
+    for(auto &e : m_entities.getEntities()) {
+        e->cTransform->pos += e->cTransform->velocity * deltaTime * 20;
+        e->cShape->sfShape.setPosition(e->cTransform->pos.x, e->cTransform->pos.y);
+    }
 }
 
 void Scene_Play::update() {
     sEnemySpawner();
+    sMovement();
     m_currentFrame++;
     m_entities.update();
 }
