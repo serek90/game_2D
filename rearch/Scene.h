@@ -4,6 +4,7 @@
 #include <SFML/Window.hpp>
 #include <memory>
 #include "GameEngine.h"
+#include "Action.h"
 
 namespace game_2d {
     
@@ -20,15 +21,15 @@ protected:
 
 public:
   virtual void update() = 0;
-  //void sDoAction(Action action) = 0;
+  virtual void sDoAction(Action action) = 0;
   virtual void sRender() = 0;
 
   void simulate(int) {
     update(); 
     sRender();
   }
-  //void doAction(Action action) {}
-  //void registerAction(Action action) {}
+  void doAction(Action action) {}
+  void registerAction(Action action) {}
 
 };
 
