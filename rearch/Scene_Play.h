@@ -17,6 +17,7 @@ public:
 Scene_Play(GameEngine *game) { m_game = game; }
 void sRender() override;
 void update() override;
+void sDoAction(Action action) override;
 
 void sEnemySpawner();
 void sMovement();

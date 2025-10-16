@@ -17,7 +17,11 @@ void Scene_Play::sRender() {
     }
  
     m_game->window().display();
-}    
+}
+
+void Scene_Play::sDoAction(Action action) {
+
+}
 
 void Scene_Play::sEnemySpawner() {
     if(m_currentFrame % m_enemySpawnTime == 0)
