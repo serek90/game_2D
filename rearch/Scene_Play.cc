@@ -2,6 +2,11 @@
 
 namespace game_2d {
 
+Scene_Play::Scene_Play(GameEngine *game) {
+    m_game = game;
+    spawnPlayer();
+}
+
 void Scene_Play::sRender() {
 
     m_game->window().clear(sf::Color::Black);
@@ -52,8 +57,59 @@ void Scene_Play::sMovement() {
 void Scene_Play::update() {
     sEnemySpawner();
     sMovement();
+    sCollision();
     m_currentFrame++;
     m_entities.update();
+}
+
+void Scene_Play::borderCollision(std::string str) {
+    for(auto &e : m_entities.getEntities(str)) {
+        if(e->cTransform->pos.x <= 0 || e->cTransform->pos.x >= m_game->window().getSize().x) {
+            e->cTransform->velocity.x *= -1;
+        }
+        if(e->cTransform->pos.y  <= 0 || e->cTransform->pos.y  >= m_game->window().getSize().y) {
+            e->cTransform->velocity.y *= -1;
+        }
+    }
+}
+
+void Scene_Play::sCollision() {
+
+    borderCollision("enemy");
+
+    for(auto &e : m_entities.getEntities("enemy")) {
+        for(auto &b : m_entities.getEntities("bullet")) {
+            auto v1 = b->cTransform->pos;
+            auto v2 = e->cTransform->pos;
+            if(v1.dist(v2) <= b->cCollision->radius + e->cCollision->radius) {
+                e->kill();
+            }
+        }
+
+        /* player collision */
+        auto v1 = m_player->cTransform->pos;
+        auto v2 = e->cTransform->pos;
+        if(v1.dist(v2) <= m_player->cCollision->radius + e->cCollision->radius) {
+            e->kill();
+        }
+    }
+
+    for(auto &b : m_entities.getEntities("bullet")) {
+        if(b->cLifeSpan->remaining-- == 0)
+            b->kill();
+    }
+}
+
+void Scene_Play::spawnBullet() {
+    auto e = m_entities.addEntity("bullet", 8, sf::Color::Green, 9);
+    e->cTransform->velocity = m_player->cTransform->direction * 8;
+    e->cTransform->pos = m_player->cTransform->pos;
+    e->cLifeSpan = std::make_shared<CLifeSpan>(40);
+}
+
+void Scene_Play::spawnPlayer() {
+    auto entity = m_entities.addEntity("player", 20, sf::Color::Blue, 8);
+    m_player = entity;
 }
 
 } /* namespace game_2d */

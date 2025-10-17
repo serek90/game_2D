@@ -8,20 +8,26 @@ namespace game_2d {
     
 class Scene_Play : public Scene {
 
-void spawnEnemy();
-EntityManager       m_entities;
-const size_t        m_enemySpawnTime = 24;
-sf::Clock           m_clock;
+    EntityManager       m_entities;
+    const size_t        m_enemySpawnTime = 24;
+    sf::Clock           m_clock;
+    std::shared_ptr<Entity> m_player;
+
+    void borderCollision(std::string str);
+    void spawnPlayer();
+    void spawnEnemy();
+    void spawnBullet();
 
 public:
-Scene_Play(GameEngine *game) { m_game = game; }
-void sRender() override;
-void update() override;
-void sDoAction(Action action) override;
+    Scene_Play(GameEngine *game);
+    void sRender() override;
+    void update() override;
+    void sDoAction(Action action) override;
 
-void sEnemySpawner();
-void sMovement();
-
+    /* Systems */
+    void sEnemySpawner();
+    void sMovement();
+    void sCollision();
 };
 
 } /* namespace game_2d */
