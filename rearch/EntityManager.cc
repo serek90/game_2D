@@ -25,7 +25,6 @@ namespace game_2d {
         for(auto n : m_toAdd) {
             m_entities.push_back(n);
             m_entityMap[n->tag()].push_back(n);
-            std::cout << n->tag() << std::endl;
         }
         m_toAdd.clear();
     }

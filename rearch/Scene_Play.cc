@@ -10,7 +10,6 @@ void Scene_Play::sRender() {
     //m_window.draw(m_text);
 
     for(auto &e : m_entities.getEntities()) {
-        std::cout << "Scene_Play::sRender(): entity_loop\n";
         e->cTransform->angle += 1.0f;
         e->cShape->sfShape.setRotation(e->cTransform->angle);
         m_game->window().draw(e->cShape->sfShape);
@@ -29,7 +28,6 @@ void Scene_Play::sEnemySpawner() {
 }
 
 void Scene_Play::spawnEnemy() {
-    std::cout << "Scene_Play::spawnEnemy()\n";
     auto e = m_entities.addEntity("enemy", 16, sf::Color::Red, 3);
 
     e->cTransform->velocity = { 2, 2 };
