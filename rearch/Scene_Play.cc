@@ -10,14 +10,22 @@ Scene_Play::Scene_Play(GameEngine *game) {
     registerAction(sf::Keyboard::Left,  "player_move_left");
     registerAction(sf::Keyboard::Right, "player_move_right");
     registerAction(sf::Keyboard::W,     "player_move_shoot");
+
+    if (!m_font.loadFromFile("../src/fonts/arial.ttf"))
+        std::cout << "Font loading error\n";
+
+    m_text.setFont(m_font);
+    m_text.setCharacterSize(24);
+    m_text.setFillColor(sf::Color(255,255,255));
+    m_text.setPosition(0, 0);
 }
 
 void Scene_Play::sRender() {
 
     m_game->window().clear(sf::Color::Black);
 
-    //m_text.setString("points: " + std::to_string(m_score));
-    //m_window.draw(m_text);
+    m_text.setString("points: " + std::to_string(m_score));
+    m_game->window().draw(m_text);
 
     for(auto &e : m_entities.getEntities()) {
         e->cTransform->angle += 1.0f;
@@ -41,6 +49,8 @@ void Scene_Play::sDoAction(Action action) {
             m_player->cTransform->velocity = {-1, 0};
         else if(action.name() == "player_move_shoot")
             spawnBullet();
+
+        m_player->cTransform->direction = m_player->cTransform->velocity;
     } else {
         if(action.name() == "player_move_up")
             m_player->cTransform->velocity = {0, 0};
@@ -110,6 +120,7 @@ void Scene_Play::sCollision() {
             auto v2 = e->cTransform->pos;
             if(v1.dist(v2) <= b->cCollision->radius + e->cCollision->radius) {
                 e->kill();
+                m_score++;
             }
         }
 
@@ -118,6 +129,7 @@ void Scene_Play::sCollision() {
         auto v2 = e->cTransform->pos;
         if(v1.dist(v2) <= m_player->cCollision->radius + e->cCollision->radius) {
             e->kill();
+            m_score = 0;
         }
     }
 

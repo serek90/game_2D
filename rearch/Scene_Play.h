@@ -9,6 +9,9 @@ namespace game_2d {
     
 class Scene_Play : public Scene {
 
+    sf::Font            m_font;
+    sf::Text            m_text;
+    int                 m_score = 0;
     EntityManager       m_entities;
     const size_t        m_enemySpawnTime = 24;
     sf::Clock           m_clock;
