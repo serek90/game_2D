@@ -23,7 +23,7 @@ public:
     void update();
     void quit() {}
     void changeScene(std::string scene_name);
-    Scene * currentScene() {}
+    std::shared_ptr<Scene> currentScene() { return scenes[m_currentScene]; }
     //Assets & getAssets() {}
     sf::RenderWindow & window() { return m_window; }
     void sUserInput();

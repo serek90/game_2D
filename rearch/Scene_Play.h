@@ -2,6 +2,7 @@
 #define __SCENE_PLAY_H
 #include "Scene.h"
 #include "EntityManager.h"
+#include "Action.h"
 #include <iostream>
 
 namespace game_2d {
