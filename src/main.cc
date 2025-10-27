@@ -1,9 +1,9 @@
 #include <iostream>
-#include "Game.h"
+#include "GameEngine.h"
 
 int main()
 {
-    game_2d::Game game("game_config.txt");
+    game_2d::GameEngine game("game_config.txt");
     game.run();
 
     return 0;
