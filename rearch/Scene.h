@@ -10,12 +10,14 @@ namespace game_2d {
     
 class GameEngine;
 
+using actionMap = std::map<int, std::string>;
+
 class Scene {
 
 protected:
   GameEngine *m_game;
   int m_currentFrame;
-  std::map<int, std::string> m_actionMap;
+  actionMap m_actionMap;
   bool m_paused;
   bool m_hasEnded;
 
@@ -28,8 +30,9 @@ public:
     update(); 
     sRender();
   }
-  void doAction(Action action) {}
-  void registerAction(Action action) {}
+  void doAction(Action action) { sDoAction(action); }
+  void registerAction(int key , std::string action_name) { m_actionMap[key] = action_name; }
+  actionMap &getActionMap() { return m_actionMap; }
 
 };
 

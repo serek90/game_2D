@@ -6,7 +6,7 @@
 
 namespace game_2d {
 
-enum class action_type {
+enum class action_t {
     NONE,
     START,
     END
@@ -14,14 +14,14 @@ enum class action_type {
 
 class Action {
     std::string m_name = "NONE";
-    action_type m_type = action_type::NONE;
+    action_t m_type = action_t::NONE;
 
 public:
     Action();
-    Action(action_type type, const std::string &name) { }
+    Action(const std::string &name, action_t type) : m_name{name}, m_type{type} { }
 
     const std::string &name() const { return m_name; }
-    action_type type() const { return m_type; }
+    action_t type() const { return m_type; }
     std::string to_string() const { return m_name; }
 };
 

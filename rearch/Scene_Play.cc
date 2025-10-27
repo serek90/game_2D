@@ -5,6 +5,11 @@ namespace game_2d {
 Scene_Play::Scene_Play(GameEngine *game) {
     m_game = game;
     spawnPlayer();
+    registerAction(sf::Keyboard::Up,    "player_move_up");
+    registerAction(sf::Keyboard::Down,  "player_move_down");
+    registerAction(sf::Keyboard::Left,  "player_move_left");
+    registerAction(sf::Keyboard::Right, "player_move_right");
+    registerAction(sf::Keyboard::W,     "player_move_shoot");
 }
 
 void Scene_Play::sRender() {
@@ -24,6 +29,28 @@ void Scene_Play::sRender() {
 }
 
 void Scene_Play::sDoAction(Action action) {
+
+    if(action.type() == action_t::START) {
+        if(action.name() == "player_move_up")
+            m_player->cTransform->velocity = {0, -1};
+        else if(action.name() == "player_move_down")
+            m_player->cTransform->velocity = {0, 1};
+        else if(action.name() == "player_move_right")
+            m_player->cTransform->velocity = {1, 0};
+        else if(action.name() == "player_move_left")
+            m_player->cTransform->velocity = {-1, 0};
+        else if(action.name() == "player_move_shoot")
+            spawnBullet();
+    } else {
+        if(action.name() == "player_move_up")
+            m_player->cTransform->velocity = {0, 0};
+        else if(action.name() == "player_move_down")
+            m_player->cTransform->velocity = {0, 0};
+        else if(action.name() == "player_move_right")
+            m_player->cTransform->velocity = {0, 0};
+        else if(action.name() == "player_move_left")
+            m_player->cTransform->velocity = {0, 0};
+    }
 
 }
 

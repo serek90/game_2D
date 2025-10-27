@@ -36,6 +36,13 @@ void GameEngine::sUserInput() {
             m_window.close();
             return;
         }
+
+        if(event.type == sf::Event::KeyPressed || event.type == sf::Event::KeyReleased) {
+            if(currentScene()->getActionMap().find(event.key.code) == currentScene()->getActionMap().end())
+                continue;
+            const action_t action_type = event.type == sf::Event::KeyPressed ? action_t::START : action_t::END;
+            currentScene()->doAction(Action(currentScene()->getActionMap().at(event.key.code), action_type) );
+        }
     }
 }
 
