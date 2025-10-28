@@ -32,7 +32,7 @@ namespace game_2d {
         void kill() { m_alive = false; }
         bool is_alive() const { return m_alive; }
         const std::string tag() const { return m_tag; }
-        const size_t id() const { return m_id; }
+        size_t id() const { return m_id; }
    };
 }
 
