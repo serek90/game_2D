@@ -1,4 +1,6 @@
 #include "Scene_Menu.h"
+#include "Scene_Play.h"
+#include "Scene_Records.h"
 
 namespace game_2d {
 
@@ -15,31 +17,28 @@ Scene_Menu::Scene_Menu(GameEngine *game) {
     if (!m_font.loadFromFile("../src/fonts/arial.ttf"))
         std::cout << "Font loading error\n";
 
-    int ctr = 0;
-    for(auto &t : m_text) {
-        t.setFont(m_font);
-        t.setCharacterSize(40);
-        t.setFillColor(sf::Color(255,255,255));
-        t.setPosition(200, ctr * 60);
-        t.setString("points: ");
-        ctr++;
-    }
-    m_text.at(0).setString("New Game");
-    m_text.at(1).setString("Records");
-    m_text.at(2).setString("Replay");
-    m_text.at(3).setString("Quit");
 
+    buttons.push_back(CButton("New Game", "Scene_Play"));
+    buttons.push_back(CButton("Records", "Scene_Records"));
+    buttons.push_back(CButton("Quit", "None"));
+
+    for(auto i = 0; i < buttons.size(); i++) {
+        buttons[i].text.setFont(m_font);
+        buttons[i].text.setCharacterSize(40);
+        buttons[i].text.setFillColor(sf::Color(255,255,255));
+        buttons[i].text.setPosition(200, i * 60);
+    }
 }
 
 void Scene_Menu::sRender() {
 
     m_game->window().clear(sf::Color::Black);
 
-    for(auto &t : m_text)
-        t.setFillColor(sf::Color(255,255,255));
-    m_text.at(curr_text).setFillColor(sf::Color(255,0,0));
-    for(auto &t : m_text)
-        m_game->window().draw(t);
+    for(auto &b : buttons)
+        b.text.setFillColor(sf::Color(255,255,255));
+    buttons.at(curr_text).text.setFillColor(sf::Color(255,0,0));
+    for(auto &b : buttons)
+        m_game->window().draw(b.text);
  
     m_game->window().display();
 }
@@ -47,11 +46,11 @@ void Scene_Menu::sRender() {
 void Scene_Menu::sDoAction(Action action) {
     if(action.type() == action_t::START) {
         if(action.name() == "player_move_up")
-            curr_text = curr_text ? --curr_text : m_text.size() - 1;
+            curr_text = curr_text ? --curr_text : buttons.size() - 1;
         else if(action.name() == "player_move_down")
-            curr_text = curr_text < m_text.size() - 1 ? ++curr_text : 0;
+            curr_text = curr_text < buttons.size() - 1 ? ++curr_text : 0;
         else if(action.name() == "next_scene")
-            m_game->changeScene("Scene_Play");   
+            m_game->changeScene(buttons[curr_text].scene);
     }
 }
 
