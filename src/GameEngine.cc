@@ -3,6 +3,8 @@
 #include <sstream>
 #include <string>
 #include <fstream>
+#include "Scene_Play.h"
+#include "Scene_Menu.h"
 
 
 namespace game_2d {
@@ -12,7 +14,7 @@ GameEngine::GameEngine(const std:: string &path) {
     m_window.create(sf::VideoMode(600, 800), "game_2d");
     m_window.setFramerateLimit(60);
 
-    changeScene("Scene_play");
+    changeScene("Scene_Menu");
 }
 
 void GameEngine::run() {
@@ -25,7 +27,10 @@ void GameEngine::run() {
 
 void GameEngine::changeScene(std::string scene_name) {
     m_currentScene = scene_name;
-    scenes[m_currentScene] = std::make_shared<Scene_Play>(this);
+    if(m_currentScene == "Scene_Menu")
+        scenes[m_currentScene] = std::make_shared<Scene_Menu>(this);
+    if(m_currentScene == "Scene_Play")
+        scenes[m_currentScene] = std::make_shared<Scene_Play>(this);
 }
 
 void GameEngine::sUserInput() {

@@ -4,7 +4,6 @@
 #include <SFML/Window.hpp>
 #include <memory>
 #include "Scene.h"
-#include "Scene_Play.h"
 
 namespace game_2d {
 

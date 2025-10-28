@@ -10,6 +10,7 @@ Scene_Play::Scene_Play(GameEngine *game) {
     registerAction(sf::Keyboard::Left,  "player_move_left");
     registerAction(sf::Keyboard::Right, "player_move_right");
     registerAction(sf::Keyboard::W,     "player_move_shoot");
+    registerAction(sf::Keyboard::Q,     "return_to_menu");
 
     if (!m_font.loadFromFile("../src/fonts/arial.ttf"))
         std::cout << "Font loading error\n";
@@ -49,6 +50,8 @@ void Scene_Play::sDoAction(Action action) {
             m_player->cTransform->velocity = {-1, 0};
         else if(action.name() == "player_move_shoot")
             spawnBullet();
+        else if(action.name() == "return_to_menu")
+            m_game->changeScene("Scene_Menu");
 
         m_player->cTransform->direction = m_player->cTransform->velocity;
     } else {
@@ -129,7 +132,7 @@ void Scene_Play::sCollision() {
         auto v2 = e->cTransform->pos;
         if(v1.dist(v2) <= m_player->cCollision->radius + e->cCollision->radius) {
             e->kill();
-            m_score = 0;
+            m_game->changeScene("Scene_Menu");
         }
     }
 
