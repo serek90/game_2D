@@ -1,7 +1,7 @@
 CC = g++
 CPPFLAGS = -lsfml-graphics -lsfml-window -lsfml-system -L Components -lComponents -g -fsanitize=address -fsanitize=undefined -Wall -Wextra
 
-objects = Entity.o EntityManager.o GameEngine.o Scene_Play.o main.o
+objects = Entity.o EntityManager.o GameEngine.o Scene_Play.o Scene_Menu.o main.o
 
 
 all: $(objects)
