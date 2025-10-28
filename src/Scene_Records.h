@@ -1,7 +1,6 @@
-#ifndef __SCENE_MENU_H
-#define __SCENE_MENU_H
+#ifndef __SCENE_RECORDS_H
+#define __SCENE_RECORDS_H
 #include "Scene.h"
-#include "Scene_Play.h"
 #include "EntityManager.h"
 #include "Action.h"
 #include <iostream>
@@ -10,14 +9,15 @@
 
 namespace game_2d {
     
-class Scene_Menu : public Scene {
+class Scene_Records : public Scene {
 
     sf::Font            m_font;
-    int curr_text = 0;
     std::vector<CButton> buttons;
+    std::array<int, 4> records;
+    int curr_text = 0;
 
 public:
-    Scene_Menu(GameEngine *game);
+    Scene_Records(GameEngine *game);
     void sRender() override;
     void update() override;
     void sDoAction(Action action) override;
@@ -25,5 +25,4 @@ public:
 
 } /* namespace game_2d */
 
-
-#endif /* __SCENE_PLAY_H */
+#endif /* __SCENE_RECORDS_H */
